@@ -1,18 +1,24 @@
 import React from 'react';
 
-const Create = () => {
+function Create() {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Form submit handler ran.")
+        console.log(e.target.value);
+    };
+
     return (
       <div>
         <main>
         <h1>CREATE A NEW COMIC</h1>
-        <form action="#" className="create-comic-form">
+        <form action="#" className="create-comic-form" onSubmit={handleSubmit}>
             <div className="create-formfield">
                 <label htmlFor="title">Title:</label>  
-                <input type="text" name="title" id="title" placeholder="Title"/>
+                <input type="text" name="title" id="title" placeholder="Title" required/>
             </div>
             <div className="create-formfield">
                 <label htmlFor="author">Author:</label>     
-                <input type="text" name="author" id="author" placeholder="Author"/>
+                <input type="text" name="author" id="author" placeholder="Author" required/>
             </div>
             <div className="create-formfield">
                 <label htmlFor="publisher">Publisher:</label>
@@ -31,22 +37,22 @@ const Create = () => {
             </div>
             <div className="create-formfield">
                 <label htmlFor="genre">Genre:</label>
-                <input type="text" name="genre" id="genre" placeholder="Genre"/>
+                <input type="text" name="genre" id="genre" placeholder="Genre" required/>
             </div>            
             <div className="create-formfield">
                 <label htmlFor="number-of-pages">Number of Pages:</label>
-                <input type="text" name="number-of-pages" id="number-of-pages" placeholder="Number of pages"/>
+                <input type="text" name="number-of-pages" id="number-of-pages" placeholder="Number of pages" required/>
             </div>
             <div className="create-formfield">
                 <label htmlFor="rating">Rating:</label>
-                <input type="number" name="rating" id="rating" placeholder="number (0-5)"/>
+                <input type="number" name="rating" id="rating" placeholder="number (0-5)" required/>
             </div>
             <div className="create-formfield">
                 <label htmlFor="synopsis">Synopsis:</label>
-                <textarea name="synopsis" id="synopsis" cols="20" rows="10" placeholder="Synopsis" className="create-comic-synopsis"></textarea>
+                <textarea name="synopsis" id="synopsis" cols="20" rows="10" placeholder="Synopsis" className="create-comic-synopsis" required></textarea>
             </div>
         </form>
-            <button className="create-submit-button">Submit</button>
+            <button type="submit" className="create-submit-button">Submit</button>
     </main>
       </div>
     )

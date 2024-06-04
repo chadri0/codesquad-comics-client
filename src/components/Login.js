@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Login = () => {
+const Login = ({ user, setUser }) => {
     return (
       <div>
         <main>

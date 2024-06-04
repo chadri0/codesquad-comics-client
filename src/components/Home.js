@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import booksData from "../data/books";
 
 const Home = () => {
+    const [books, setBooks] = useState([]);
+
+    useEffect(() => {
+      setBooks(booksData);
+    }, []);
+
     return (
       <div>
         <section>
@@ -13,7 +19,7 @@ const Home = () => {
         <main>
         <h1>COMPLETE COLLECTION</h1>
         <div className="index-comic-collection">
-          {booksData.map((book) => (
+          {books.map((book) => (
             <div className={`index-comic ${book.title}-comic`} key={book._id}>
               <a href="#"><img src={`./images/${book.image}`} alt={`${book.title}-comic-cover`} className="index-comic-cover"/></a>
               <br/>
