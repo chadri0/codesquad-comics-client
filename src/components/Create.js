@@ -1,17 +1,24 @@
 import React from 'react';
 
 function Create() {
-    const handleSubmit = (e) => {
+    const createSubmit = (e) => {
         e.preventDefault();
-        console.log("Form submit handler ran.")
-        console.log(e.target.value);
+        console.log("Create submit handler ran.");
+        const formData = new FormData(e.target);
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
     };
+    
+    // console.log(e.target.value) was returning "undefined" so I scoped the web for a better method to print out the input entries
+    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
 
     return (
       <div>
         <main>
         <h1>CREATE A NEW COMIC</h1>
-        <form action="#" className="create-comic-form" onSubmit={handleSubmit}>
+        <form action="#" className="create-comic-form" onSubmit={createSubmit}>
             <div className="create-formfield">
                 <label htmlFor="title">Title:</label>  
                 <input type="text" name="title" id="title" placeholder="Title" required/>
@@ -51,9 +58,9 @@ function Create() {
                 <label htmlFor="synopsis">Synopsis:</label>
                 <textarea name="synopsis" id="synopsis" cols="20" rows="10" placeholder="Synopsis" className="create-comic-synopsis" required></textarea>
             </div>
-        </form>
             <button type="submit" className="create-submit-button">Submit</button>
-    </main>
+        </form>
+        </main>
       </div>
     )
    }

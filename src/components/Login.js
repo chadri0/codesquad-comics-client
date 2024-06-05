@@ -1,22 +1,35 @@
 import React from 'react';
 
-const Login = ({ user, setUser }) => {
+function Login({ user, setUser }) {
+    const loginSubmit = (e) => {
+      e.preventDefault();
+      console.log("Login submit handler ran.")
+      const formData = new FormData(e.target);
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+  };
+
+    // console.log(e.target.value) was returning "undefined" so I scoped the web for a better method to print out the input entries
+    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
+
     return (
       <div>
         <main>
         <h1>LOGIN</h1>
-        <form action="#" className="login-form">
-            <div className="login-field">
+        <form action="#" className="login-form" onSubmit={loginSubmit}>
+        <div className="login-field">
                 <label htmlFor="email">Email address:</label>
-                <input type="email" name="email" id="email" placeholder="Email" required/>
+                <input type="email" name="email" id="email" required/>
             </div>
             <div className="login-field">
                 <label htmlFor="password">Password:</label>
-                <input type="password" name="" id="" placeholder="Password" required/>
+                <input type="password" name="password" id="password" required/>
             </div>
+            <button type="submit" className="login-submit-button">Submit</button>
         </form>
-        <button className="login-submit-button">Submit</button>
-    </main>
+        </main>
       </div>
     )
    }
