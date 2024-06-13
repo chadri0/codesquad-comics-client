@@ -1,12 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import booksData from "../data/books";
+// import booksData from "../data/books";
 
-const Home = () => {
+function Home() {
     const [books, setBooks] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    // useEffect(() => {
+    //   setBooks(booksData);
+    // }, []);
 
     useEffect(() => {
-      setBooks(booksData);
+      fetch(`http://localhost:8080/api/books`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.statusCode === 200) {
+            setBooks(result.data)
+          } else {
+              throw new Error(result.error.message)
+            }
+        })
+        .catch((error) => setErrorMessage(error.message));
     }, []);
+
+    console.log("books :>> ", books);
+    console.log("errorMessage :>> ", errorMessage);
+    
 
     return (
       <div>
@@ -19,21 +42,25 @@ const Home = () => {
         <main>
         <h1>COMPLETE COLLECTION</h1>
         <div className="index-comic-collection">
-          {books.map((book) => (
-            <div className={`index-comic ${book.title}-comic`} key={book._id}>
-              <a href="#"><img src={`./images/${book.image}`} alt={`${book.title}-comic-cover`} className="index-comic-cover"/></a>
+          {errorMessage ? (
+            <p>{errorMessage}</p>
+          ) : (
+            books && books.map((book) =>(
+              <div className={`index-comic ${book.title}-comic`} key={book._id}>
+              <a href="#"><img src={`./images/${book.image}`} alt={`${book.title}-comic-cover`} className="index-comic-cover" style={{ width: '200px' }}/></a>
               <br/>
-              <em>{book.title}</em>
+              <em>{book.title} </em>
               by {book.author}
               <br/>
               {book.rating} stars
               <br/>
-              <a href="#" className="index-details">Details</a>
-            </div>
-          ))}
-        </div> 
-        <div>
+              <a href={`/book/${book._id}`} className="index-details">Details</a>
+              </div>
+            ))
+          )}
+          <div>
           <button className="index-button">DISPLAY MORE</button>
+        </div>
         </div>
       </main>
       </div>

@@ -28,7 +28,7 @@ const Admin = () => {
                 {books.map((book) => (
                   <tr key={book._id}>
                     <td>{book.title}</td>
-                    <td><button className="admin-edit-button">EDIT</button></td>
+                    <td><button className="admin-edit-button"><a href={`/update/${book._id}`}>EDIT</a></button></td>
                     <td><button className="admin-delete-button">DELETE</button></td>
                   </tr>
                 ))}

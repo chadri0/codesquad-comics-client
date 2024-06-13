@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Routes, Route } from "react-router-dom";
 import Header from "./shared/Header";
 import Footer from "./shared/Footer";
 import About from "./components/About";
@@ -11,26 +12,30 @@ import Update from "./components/Update";
 
 
 function App() {
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedUser = localStorage.getItem("user");
+  //   if (savedUser) {
+  //     setUser(JSON.parse(savedUser));
+  //   }
+  // }, []);
+
+  const [user, setUser] = useState(localStorage.getItem("user") || {});
 
   return (
     <div className="App">
       
       <Header user={user} setUser={setUser} />
-      <About />
-      <Admin />
-      <Create />
-      {/* <Home /> */}
-      <Login user={user} setUser={setUser} />
-      <Signup user={user} setUser={setUser} />
-      <Update />
+      <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/create" element={<Create />} />
+      <Route path="/login" element={<Login user={user} setUser={setUser} />} />
+      <Route path="/signup" element={<Signup user={user} setUser={setUser} />} />
+      <Route path="/update" element={<Update />} />
+      </Routes>
       <Footer />
     </div>
   );
