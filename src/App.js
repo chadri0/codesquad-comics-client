@@ -34,7 +34,7 @@ function App() {
       <Route path="/create" element={<Create />} />
       <Route path="/login" element={<Login user={user} setUser={setUser} />} />
       <Route path="/signup" element={<Signup user={user} setUser={setUser} />} />
-      <Route path="/update" element={<Update />} />
+      <Route path="/books/:bookId/update" element={<Update />} />
       </Routes>
       <Footer />
     </div>

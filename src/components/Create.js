@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 function Create() {
+    const navigate = useNavigate
+
     const createSubmit = (e) => {
         e.preventDefault();
         console.log("Create submit handler ran.");
@@ -8,17 +11,28 @@ function Create() {
         for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
+
+        // console.log(e.target.value) was returning "undefined" so I scoped the web for a better method to print out the input entries
+        // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+        // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
+
+        fetch(`http://localhost:8080/api/books/create`, {
+            method: "POST",
+            body: JSON.stringify(),
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                navigate(`/admin`);
+            })
+                .catch((error) => console.log("error :>>", error));
     };
-    
-    // console.log(e.target.value) was returning "undefined" so I scoped the web for a better method to print out the input entries
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
 
     return (
       <div>
         <main>
         <h1>CREATE A NEW COMIC</h1>
-        <form action="#" className="create-comic-form" onSubmit={createSubmit}>
+        <form className="create-comic-form" onSubmit={createSubmit}>
             <div className="create-formfield">
                 <label htmlFor="title">Title:</label>  
                 <input type="text" name="title" id="title" placeholder="Title" required/>

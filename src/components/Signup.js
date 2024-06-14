@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 function Signup({ user, setUser }) {
+  const navigate = useNavigate();
+
     const signupSubmit = (e) => {
       e.preventDefault();
         console.log("Signup submit handler ran.")
@@ -8,11 +11,23 @@ function Signup({ user, setUser }) {
           for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
           }
+            // console.log(e.target.value) was returning "undefined" so I scoped the web for a better method to print out the input entries
+            // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+            // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
+          
+            fetch(`http://localhost:8080/signup`, {
+              method: "POST",
+              body: JSON.stringify(formData),
+            })
+              .then((response) => response.json())
+              .then((result) => {
+                console.log(("result :>>", result));
+                localStorage.setItem("user", JSON.stringify(result.data));
+                setUser(result.data);
+                navigate("/admin");
+              })
+              .catch();
     };
-
-    // console.log(e.target.value) was returning "undefined" so I scoped the web for a better method to print out the input entries
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
 
     return (
       <div>

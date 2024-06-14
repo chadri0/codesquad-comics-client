@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import booksData from "../data/books";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Update = () => {
     const [book, setBook] = useState({});
     const id = "608f68ce-d099-41e5-9961-cdd673257eb2";
 
+    const {bookId} = useParams();
+    const navigate = useNavigate();
+
     useEffect(() => {
-        const foundBook = booksData.find(item => item._id === id);
-        setBook(foundBook);
-    }, [id]);
+        fetch(`http://localhost/8080/api/books/${bookId}`)
+            .then((response) => response.json())
+            .then((result) => {
+                console.log("result :>>", result);
+                setBook(result.data);
+                navigate("/admin")
+            })
+            .catch((error) => console.log("error :>>", error));
+    }, [bookId]);
 
     const updateSubmit = (e) => {
         e.preventDefault();
@@ -17,11 +27,21 @@ const Update = () => {
         for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
-    };
+        // console.log(e.target.value) was returning "undefined" so I scoped the web for a better method to print out the input entries
+        // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+        // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
 
-    // console.log(e.target.value) was returning "undefined" so I scoped the web for a better method to print out the input entries
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
+        fetch(`http://localhost:8080/api/books/update/${bookId}`, {
+            method: "PUT",
+            body: JSON.stringify(),
+        })
+        .then((response) => response.json())
+        .then((result) => {
+            console.log("result :>>", result);
+            navigate("/admin");
+        })
+        .catch((error) => console.log("error :>>", error));
+    };
 
     return (
       <div>
