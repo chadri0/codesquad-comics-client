@@ -4,6 +4,7 @@ import booksData from "../data/books";
 
 const Admin = () => {
     const [books, setBooks] = useState([]);
+
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -14,7 +15,7 @@ const Admin = () => {
     }, []);
 
     const handleDeleteBook = (bookId) => {
-      fetch(`http://localhost:8080/api/books.delete/${bookId}`, {
+      fetch(`http://localhost:8080/api/books/delete/${bookId}`, {
         method: "DELETE",
       })
         .then((response) => response.json())
@@ -41,6 +42,7 @@ const Admin = () => {
               <tbody>
                 {books.map((book) => (
                   <tr key={book._id}>
+                    <td>{book.title}</td>
                     <td>
                       <button className="button-blue" onClick={() => navigate(`/books/${book._id}`)}>
                         UPDATE

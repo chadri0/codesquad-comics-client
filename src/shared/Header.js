@@ -37,6 +37,9 @@ const Header = ({ user, setUser }) => {
             <li>
               <Link to="/about">ABOUT</Link>
             </li>
+            <li>
+              <Link to="/signup">SIGNUP</Link>
+            </li>
             {user.username ? (
               <>
                 <li>
